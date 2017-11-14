@@ -1,5 +1,5 @@
 require "ratsel/version"
 
-module Ratsel
+class Ratsel
   # Your code goes here...
 end
