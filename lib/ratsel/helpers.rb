@@ -1,14 +1,4 @@
 class Helpers
-  # Cipher array
-  def self.character_map 
-    ['a', 'b', 'c', 'd', 'e',
-    'f', 'g', 'h', 'i', 'j', 'k',
-    'l', 'm', 'n', 'o', 'p', 'q',
-    'r', 's', 't', 'u', 'v', 'w',
-    'x', 'y', 'z', 1, 2, 3, 4, 5,
-    6, 7, 8, 9, ' ', '.', ',']
-  end
-
   # Read text from file
   def self.read_file_text(text_file)
     message = File.open(File.dirname(__FILE__) + text_file).each { |line| return line }
@@ -44,6 +34,7 @@ class Helpers
     key_rotor_array
   end
 
+  # Sum of A - n rotation and A - n offsets
   def self.sum_rotation_offset
     sum_array = []
     @offsets_array = offsets_array
