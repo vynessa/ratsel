@@ -1,5 +1,5 @@
 require "ratsel/version"
-
-class Ratsel
-  # Your code goes here...
-end
+require "ratsel/helpers"
+require "ratsel/encrypt"
+require "ratsel/decrypt"
+require "ratsel/helpers"
