@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+require 'ratsel'
+
+if ARGV[0] && (ARGV[0] == 'help' || ARGV[0] == '--help' || ARGV[0] == '-h')
+  Ratsel::Utility.encrypt
+elsif ARGV.length < 2 || ARGV.length > 2
+  puts "Incorrect number of arguments. See --help for the documentation"
+elsif !File.file?(ARGV[0])
+  puts "The input file path does not exist. See --help for the documentation"
+elsif ARGV[1] && File.file?(ARGV[1])
+  puts "The output file path cannot be created, or this file already exist. See --help for the documentation"
+else
+  Ratsel::Encrypt.new(ARGV[0], ARGV[1]).encrypt
+end
