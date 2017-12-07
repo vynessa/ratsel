@@ -3,13 +3,13 @@
 require 'ratsel'
 
 if ARGV[0] && (ARGV[0] == 'help' || ARGV[0] == '--help' || ARGV[0] == '-h')
-  Ratsel::Utility.decrypt
-elsif ARGV.length < 4 || ARGV.length > 4
+  Ratsel::Utility.crack
+elsif ARGV.length < 3 || ARGV.length > 3
   puts "Incorrect number of arguments. See --help for the documentation"
 elsif !File.file?(ARGV[0])
   puts "The input file path does not exist. See --help for the documentation"
-elsif ARGV.length == 4 && File.file?(ARGV[1])
+elsif ARGV.length == 3 && File.file?(ARGV[1])
   puts "The output file path cannot be created, or this file already exist. See --help for the documentation"
 else
-  Ratsel::Decrypt.new(ARGV[0], ARGV[1], ARGV[2], ARGV[3]).decrypt
+  Ratsel::Crack.new(ARGV[0], ARGV[1], ARGV[2]).crack
 end
