@@ -1,20 +1,38 @@
+require_relative "helpers/accessor"
+require_relative "helpers/cipher"
 require_relative "helpers/helpers"
+require_relative "helpers/message"
+
 require 'json'
 
 module Ratsel
-  class Ratsel::Decrypt
-    def decrypt(encrypted_txt)
-      decrypted_message = []
-      sliced_encrypted_array = []
-      @encrypted_message = Helpers.write_encrypted_texts(encrypted_txt)
-      @character_map = Helpers.character_map
+  class Decrypt
+    include SendMessage
+    attr_reader :encryption_key, :encrypted_txt, :decrypt_txt, :character_map,
+                :sum_rotation_offset, :encryption_date
+    def initialize(
+      encrypted_txt,
+      decrypt_txt,
+      encryption_key,
+      encryption_date
+    )
+      @encryption_key = encryption_key
+      @encrypted_txt = encrypted_txt
+      @decrypt_txt = decrypt_txt
+      @character_map = Cipher.character_map
+      @encryption_date = encryption_date
+      @offsets_array = Helpers.offsets_array(@encryption_date)
+      @rotation_array = Helpers.rotation_array(@encryption_key)
+      @sum_rotation_offset = Helpers.sum_rotation_offset(@offsets_array, @rotation_array)
+    end
 
-      # Remove newline character
-      lam = lambda { |str| return str.gsub("\n", "")}
-      encrypted_message = @encrypted_message.map(&lam)[3].split('')
-      sum_rotation_offset = JSON.parse @encrypted_message.map(&lam)[2]
+    def decrypt
+      decrypted_message = ''
+      sliced_encrypted_array = []
+      sum_rotation_offset = @sum_rotation_offset.map { |n| -n.abs }
+      @encrypted_message = Accessor.read_file_text(@encrypted_txt)
     
-      encrypted_message.each_slice(4) { |message|
+      @encrypted_message.each_slice(4) { |message|
         sliced_encrypted_array << message.join('')
       }
     
@@ -25,12 +43,14 @@ module Ratsel
     
         n.times { |i|
           char_rotate = @character_map.rotate(@character_map.index(encrypted_batch.shift))
-          rotated_array = char_rotate.rotate(-(sum_rotation_offset[i]))
+          rotated_array = char_rotate.rotate(sum_rotation_offset[i])
           decrypted_message << rotated_array.shift
         }
       }
+
+      message(encrypted_txt, encryption_key, encryption_date)
         
-      decrypted_message = decrypted_message.join      
+      decrypted_message
     end
   end
 end

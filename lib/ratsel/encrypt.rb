@@ -1,15 +1,31 @@
+require_relative "helpers/accessor"
+require_relative "helpers/cipher"
 require_relative "helpers/helpers"
+require_relative "helpers/message"
 
 module Ratsel
-  class Ratsel::Encrypt
-    def encrypt(message_txt, encrypted_txt)
-      @character_map = Helpers.character_map
-      @sum_rotation_offset = Helpers.sum_rotation_offset(encrypted_txt)      
-      @message = Helpers.read_file_text(message_txt).split('')
-      encrypted_message = []
+  class Encrypt
+    include SendMessage
+    attr_reader :message_txt, :encrypted_txt, :encryption_date, :character_map, :encryption_key, 
+                :offsets_array, :rotation_array, :sum_rotation_offset
+
+    def initialize(message_txt, encrypted_txt)
+      @message_txt = message_txt
+      @encrypted_txt = encrypted_txt
+      @encryption_date = Time.now.strftime("%d%m%y")
+      @character_map = Cipher.character_map
+      @encryption_key = (1..5).map { (1..9).to_a[rand(9)] }.join
+      @offsets_array = Helpers.offsets_array(@encryption_date)
+      @rotation_array = Helpers.rotation_array(@encryption_key)
+      @sum_rotation_offset = Helpers.sum_rotation_offset(@offsets_array, @rotation_array)
+    end
+
+    def encrypt
+      message = Accessor.read_file_text(@message_txt)
+      encrypted_message = ''
       sliced_message_array = []
 
-      @message.each_slice(4) { |message|
+      message.each_slice(4) { |message|
         sliced_message_array << message.join('')
       }
 
@@ -23,12 +39,10 @@ module Ratsel
           encrypted_message << rotated_array.shift
         }
       }
-        
-      encrypted_message = encrypted_message.join
 
-      File.open(encrypted_txt, "a") do |line|
-        line.write("\n#{encrypted_message}")   
-      end
+      message(message_txt, encryption_key, encryption_date)
+        
+      encrypted_message
     end
   end
 end
