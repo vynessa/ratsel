@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+
+require 'ratsel'
+
+if ARGV[0] && (ARGV[0] == 'help' || ARGV[0] == '--help' || ARGV[0] == '-h')
+  Ratsel::Utility.cracker
+end
