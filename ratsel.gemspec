@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Vanessa Ejikeme"]
   spec.email         = ["vanessa.ejikeme@gmail.com"]
 
-  spec.summary       = %q{An encryption engine}
-  spec.description   = %q{Ratsel is used in encryption and decrypting text from a file.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = "An encryption engine"
+  spec.description   = "Ratsel is used in encryption and decrypting text from a file."
+  spec.homepage      = "https://github.com/vynessa/ratsel"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
