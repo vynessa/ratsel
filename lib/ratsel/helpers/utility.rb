@@ -28,7 +28,7 @@ module Ratsel
           HERE
       end
   
-      def self.cracker
+      def self.crack
         puts(<<-HERE)
           Cracking a message file encrypted with Ratsel, given that you are a spy\n
           who knows the \"encryption date\"

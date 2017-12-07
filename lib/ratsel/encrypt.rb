@@ -40,7 +40,11 @@ module Ratsel
         }
       }
 
-      message(message_txt, encryption_key, encryption_date)
+      message(encrypted_txt, encryption_key, encryption_date)
+
+      File.open(encrypted_txt, "a") do |line|
+        line.write("#{encrypted_message}")    
+      end
         
       encrypted_message
     end
