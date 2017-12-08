@@ -1,3 +1,5 @@
+require_relative "helpers"
+
 module Ratsel
   class Helpers
     # Get offsets array from the date of message transmission
@@ -31,6 +33,43 @@ module Ratsel
       4.times { sum_array << @offsets_array.shift + @rotation_array.shift }
 
       sum_array
+    end
+
+    # Get key
+    def self.get_key(differences)
+      key_array = []
+      differences.each_with_index do |value, index|
+        break if index == differences.size - 1
+        first_value = value
+        second_value = differences[index + 1]
+
+        compare(index, first_value, second_value, key_array, differences)
+      end
+
+      "%d%d%d%d" % [
+        differences[0],
+        differences[1][-1],
+        differences[2][-1],
+        differences[3][-1]
+      ]
+    end
+
+    private
+    def self.compare(index, first_value, second_value, key_array, differences)
+      until first_value.to_i >= 100 || key_array[index]
+        until second_value.to_i >= 100 || key_array[index]
+          if first_value[1] == second_value[0]
+            differences[index] = first_value
+            differences[index + 1] = second_value
+            key_array[index] = true
+          else
+            second_value = (second_value.to_i + Ratsel::Cipher.character_map.size).to_s
+          end
+        end
+
+        second_value = differences[index + 1]
+        first_value = (first_value.to_i + Ratsel::Cipher.character_map.size).to_s
+      end
     end
   end
 end
