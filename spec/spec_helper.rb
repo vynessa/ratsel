@@ -7,11 +7,12 @@ if ENV['CIRCLE_ARTIFACTS']
 end
 
 SimpleCov.start
+require 'coveralls'
+# Coveralls.wear!
 require "bundler/setup"
 Bundler.setup
 require "ratsel"
-# require 'coveralls'
-# Coveralls.wear!
+
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
