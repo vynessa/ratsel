@@ -42,9 +42,7 @@ module Ratsel
 
       message(encrypted_txt, encryption_key, encryption_date)
 
-      File.open(encrypted_txt, "a") do |line|
-        line.write("#{encrypted_message}")    
-      end
+      Accessor.write_encrypted_texts(encrypted_txt, encrypted_message)
         
       encrypted_message
     end

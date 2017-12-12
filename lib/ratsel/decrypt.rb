@@ -2,7 +2,6 @@ require_relative "helpers/accessor"
 require_relative "helpers/cipher"
 require_relative "helpers/helpers"
 require_relative "helpers/message"
-
 require 'json'
 
 module Ratsel
@@ -50,9 +49,7 @@ module Ratsel
 
       message(decrypt_txt, encryption_key, encryption_date)
 
-      File.open(decrypt_txt, "a") do |line|
-        line.write("#{decrypted_message}")    
-      end
+      Accessor.write_encrypted_texts(decrypt_txt, decrypted_message)
         
       decrypted_message
     end
