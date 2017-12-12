@@ -1,6 +1,4 @@
 require 'spec_helper'
-# require 'json'
-# require 'stringio'
 
 RSpec.describe Ratsel do
   describe ".accessor" do

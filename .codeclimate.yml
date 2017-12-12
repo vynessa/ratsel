@@ -1,0 +1,21 @@
+engines:
+  duplications:
+    enabled: true
+    config:
+      languages:
+        ruby:
+          mass_threshold: 20
+  eslint:
+    enabled: true
+    checks:
+      import/extensions:
+        enabled: true
+ratings:
+  paths:
+      - "**.rb"
+exclude_paths:
+- "Gemfile"
+- "Gemfile.lock"
+- "ratsel.gemspec"
+- .gitignore
+- "lib/ratsel/test.txt"
