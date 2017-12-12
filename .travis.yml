@@ -2,4 +2,4 @@ language: ruby
 rvm:
   - 2.4.1
 after_success:
-- coveralls --verbose
+  - cat ./coverage/lcov.info

@@ -11,8 +11,12 @@ RSpec.describe Ratsel do
   }
 
   describe ".decrypt" do
-    it "should return the decrypted message" do
+    it "should return an instance of decrypted message" do
       expect(decrypted_message).to be_an_instance_of(Ratsel::Decrypt)
+    end
+
+    xit "should return the decrypted message" do
+      expect(decrypted_message.decrypt).to eql('hello hello ..end..')
     end
   end
 end
