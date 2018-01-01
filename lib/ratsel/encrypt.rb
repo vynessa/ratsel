@@ -21,30 +21,35 @@ module Ratsel
     end
 
     def encrypt
-      message = Accessor.read_file_text(@message_txt)
-      encrypted_message = ''
-      sliced_message_array = []
+      begin
+        message = Accessor.read_file_text(@message_txt)
+        encrypted_message = ''
+        sliced_message_array = []
 
-      message.each_slice(4) { |message|
-        sliced_message_array << message.join('')
-      }
-
-      sliced_message_array.each_with_index { |batch, index|
-        message_batch = batch.downcase.split('')
-        n = message_batch.length
-    
-        n.times { |i|
-          char_rotate = @character_map.rotate(@character_map.index(message_batch.shift))
-          rotated_array = char_rotate.rotate(@sum_rotation_offset[i])
-          encrypted_message << rotated_array.shift
+        message.each_slice(4) { |message|
+          sliced_message_array << message.join('')
         }
-      }
 
-      message(encrypted_txt, encryption_key, encryption_date)
+        sliced_message_array.each_with_index { |batch, index|
+          message_batch = batch.downcase.split('')
+          n = message_batch.length
+      
+          n.times { |i|
+            char_rotate = @character_map.rotate(@character_map.index(message_batch.shift))
+            rotated_array = char_rotate.rotate(@sum_rotation_offset[i])
+            encrypted_message << rotated_array.shift
+          }
+        }
 
-      Accessor.write_encrypted_texts(encrypted_txt, encrypted_message)
-        
-      encrypted_message
+        message(encrypted_txt, encryption_key, encryption_date)
+
+        Accessor.write_encrypted_texts(encrypted_txt, encrypted_message)
+    
+        encrypted_message
+
+      rescue TypeError => e
+        puts "#{e}\nMake sure the characters in your text file are numbers, letters, a period, space or comma."
+      end
     end
   end
 end

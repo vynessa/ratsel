@@ -9,12 +9,8 @@ module Ratsel
     include SendMessage
     attr_reader :encryption_key, :encrypted_txt, :decrypt_txt, :character_map,
                 :sum_rotation_offset, :encryption_date
-    def initialize(
-      encrypted_txt,
-      decrypt_txt,
-      encryption_key,
-      encryption_date
-    )
+                
+    def initialize(encrypted_txt, decrypt_txt, encryption_key, encryption_date)
       @encryption_key = encryption_key
       @encrypted_txt = encrypted_txt
       @decrypt_txt = decrypt_txt

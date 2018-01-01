@@ -1,5 +1,3 @@
-require_relative "helpers"
-
 module Ratsel
   class Helpers
     # Get offsets array from the date of message transmission
@@ -35,7 +33,22 @@ module Ratsel
       sum_array
     end
 
-    # Get key
+    def self.get_differences(encrypted_message, end_char, offsets)
+      @character_map = Ratsel::Cipher.character_map
+      differences = []
+
+      4.times do |i|
+        diff = (@character_map.index(encrypted_message[i]) -
+        @character_map.index(end_char[i]))
+
+        diff -= offsets[i].to_i
+        differences[i] = diff.to_s.rjust(2, '0')
+      end
+
+      differences
+    end
+
+    # Get encryption key
     def self.get_key(differences)
       key_array = []
       differences.each_with_index do |value, index|
